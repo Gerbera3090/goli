@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  branch-policy:
+    name: Branch policy
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate base and head branches
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          if [[ "$BASE_BRANCH" == "main" && "$HEAD_BRANCH" != "dev" ]]; then
+            echo "main에는 dev 브랜치에서만 Pull Request를 만들 수 있습니다."
+            exit 1
+          fi
+
+          if [[ "$BASE_BRANCH" == "dev" && ! "$HEAD_BRANCH" =~ ^TU-[0-9]+(-[a-z0-9][a-z0-9-]*)?$ ]]; then
+            echo "dev 작업 브랜치는 TU-123-short-description 형식이어야 합니다."
+            exit 1
+          fi
+
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: goli
+          MYSQL_USER: goli
+          MYSQL_PASSWORD: goli
+          MYSQL_ROOT_PASSWORD: goli-root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -pgoli-root"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=20
+      redis:
+        image: redis:7.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.32.1
+          run_install: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm check-types
+      - run: pnpm test
+      - run: pnpm build
+      - name: Verify migrations and schema
+        run: |
+          pnpm --filter @goli/api db:migrate
+          schema_output="$(pnpm --filter @goli/api exec mikro-orm schema:update --dump)"
+          echo "$schema_output"
+          grep -q "Schema is up-to-date" <<< "$schema_output"
+      - name: Smoke-test the production API entrypoint
+        run: |
+          pnpm --filter @goli/api start > /tmp/goli-api.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4000/api/health | grep -q '"mysql":"up"'; then
+              exit 0
+            fi
+            sleep 1
+          done
+
+          cat /tmp/goli-api.log
+          exit 1

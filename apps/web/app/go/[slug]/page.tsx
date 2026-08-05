@@ -1,0 +1,41 @@
+import { resolveLinkResponseSchema } from "@goli/contracts/links";
+import { notFound, redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
+
+interface GoPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function GoPage({ params }: GoPageProps): Promise<never> {
+  const { slug: encodedSlug } = await params;
+  let slug: string;
+
+  try {
+    slug = decodeURIComponent(encodedSlug);
+  } catch {
+    notFound();
+  }
+
+  const apiOrigin = process.env.API_INTERNAL_URL ?? "http://127.0.0.1:4000";
+  const response = await fetch(
+    `${apiOrigin}/api/links/${encodeURIComponent(slug)}`,
+    { cache: "no-store" },
+  );
+
+  if (response.status === 404 || response.status === 400) {
+    notFound();
+  }
+
+  if (!response.ok) {
+    throw new Error("고리 서버에 연결하지 못했습니다.");
+  }
+
+  const result = resolveLinkResponseSchema.safeParse(await response.json());
+
+  if (!result.success) {
+    throw new Error("고리 서버가 잘못된 응답을 반환했습니다.");
+  }
+
+  redirect(result.data.targetUrl);
+}

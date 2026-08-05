@@ -1,0 +1,28 @@
+{
+  "name": "@goli/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.mjs",
+    "./eslint/nestjs": "./eslint/nestjs.mjs",
+    "./eslint/next": "./eslint/next.mjs",
+    "./eslint/node": "./eslint/node.mjs",
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/library.json": "./typescript/library.json",
+    "./typescript/nestjs.json": "./typescript/nestjs.json",
+    "./typescript/next.json": "./typescript/next.json",
+    "./typescript/node.json": "./typescript/node.json"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint-config-next": "^16.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.9.0",
+    "typescript-eslint": "^8.66.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.39.0 <10.0.0",
+    "typescript": ">=5.9.0 <6.1.0"
+  }
+}

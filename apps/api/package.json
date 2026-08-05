@@ -1,0 +1,49 @@
+{
+  "name": "@goli/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nest build",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "db:migrate": "mikro-orm migration:up",
+    "db:migrate:down": "mikro-orm migration:down",
+    "dev": "nodemon --watch src --watch ../../packages/contracts/dist --ext ts,js,json --exec nest start",
+    "lint": "eslint .",
+    "start": "node dist/src/main.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@goli/contracts": "workspace:*",
+    "@mikro-orm/core": "^7.1.10",
+    "@mikro-orm/decorators": "^7.1.10",
+    "@mikro-orm/migrations": "^7.1.10",
+    "@mikro-orm/mysql": "^7.1.10",
+    "@mikro-orm/nestjs": "^7.0.2",
+    "@nestjs/common": "^11.1.28",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.1.28",
+    "@nestjs/platform-express": "^11.1.28",
+    "ioredis": "^6.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@goli/config": "workspace:*",
+    "@mikro-orm/cli": "^7.1.10",
+    "@nestjs/cli": "^11.0.24",
+    "@types/node": "^22.20.1",
+    "eslint": "^9.39.5",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.10"
+  },
+  "mikro-orm": {
+    "configPaths": [
+      "./mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
+  }
+}

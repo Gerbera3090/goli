@@ -1,0 +1,25 @@
+{
+  "name": "goli",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.22.1"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "dev": "turbo run dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "infra:down": "docker compose -f infra/compose.yaml down",
+    "infra:up": "docker compose -f infra/compose.yaml up -d",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.0",
+    "turbo": "^2.10.8",
+    "typescript": "^6.0.2"
+  }
+}
