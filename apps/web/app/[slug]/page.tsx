@@ -3,11 +3,13 @@ import { notFound, redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-interface GoPageProps {
+interface LinkPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function GoPage({ params }: GoPageProps): Promise<never> {
+export default async function LinkPage({
+  params,
+}: LinkPageProps): Promise<never> {
   const { slug: encodedSlug } = await params;
   let slug: string;
 

@@ -20,7 +20,7 @@ function createService(options?: {
     set: vi.fn().mockResolvedValue(undefined),
   } as unknown as RedisService;
   const config = {
-    get: vi.fn().mockReturnValue(3600),
+    get: vi.fn().mockReturnValue(120),
   } as unknown as ConfigService;
 
   return {
@@ -43,18 +43,18 @@ describe("LinksService", () => {
       expect.objectContaining({
         slug: "고리테스트",
         targetUrl: "https://sparcs.org/",
-        ownerUserId: 0,
+        createdByUserId: 0,
       }),
     );
     expect(redis.set).toHaveBeenCalledWith(
       "link:slug:고리테스트",
       "https://sparcs.org/",
-      3600,
+      120,
     );
     expect(result).toMatchObject({
       id: 42,
-      ownerUserId: 0,
-      shortPath: "/go/고리테스트",
+      createdByUserId: 0,
+      shortPath: "/고리테스트",
     });
   });
 

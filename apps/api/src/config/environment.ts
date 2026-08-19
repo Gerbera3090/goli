@@ -16,7 +16,7 @@ const environmentSchema = z.object({
   DB_PASSWORD: z.string().min(1).default("goli"),
   REDIS_HOST: z.string().trim().min(1).default("127.0.0.1"),
   REDIS_PORT: portSchema.default(6379),
-  REDIS_LINK_TTL_SECONDS: positiveIntegerSchema.default(3600),
+  REDIS_LINK_TTL_SECONDS: positiveIntegerSchema.default(120),
   LINK_CREATE_RATE_LIMIT_MAX: positiveIntegerSchema.default(20),
   LINK_CREATE_RATE_LIMIT_WINDOW_SECONDS: positiveIntegerSchema.default(60),
 });

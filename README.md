@@ -2,12 +2,12 @@
 
 KAIST 구성원을 위한 짧은 링크 서비스입니다.
 
-현재 MVP는 로그인 없이 링크를 생성하며, 모든 링크의 `ownerUserId`는 익명 사용자 `0`으로 저장합니다. 익명 생성 API에는 IP 단위 요청 제한을 적용하고, 로컬 네트워크와 인증정보가 포함된 URL은 받지 않습니다.
+현재 MVP는 로그인 없이 링크를 생성하며, 모든 링크의 `createdByUserId`는 익명 사용자 `0`으로 저장합니다. 익명 생성 API에는 IP 단위 요청 제한을 적용하고, 로컬 네트워크와 인증정보가 포함된 URL은 받지 않습니다.
 
 ## 구조
 
 ```text
-apps/web          Next.js 웹과 /go/[slug] 리다이렉트
+apps/web          Next.js 웹과 /[slug] 리다이렉트
 apps/api          NestJS 링크 API
 packages/contracts  Zod 기반 요청/응답 계약
 packages/config     ESLint와 TypeScript 공통 설정
@@ -17,6 +17,8 @@ infra/compose.yaml  MySQL과 Redis 개발 인프라
 MySQL이 링크의 원본 저장소이고 Redis는 slug 조회 결과를 캐시합니다. Redis가 잠시 중단되어도 API는 MySQL에서 링크를 조회합니다.
 
 링크 생성 제한도 Redis를 우선 사용합니다. Redis 장애 시에는 API 인스턴스 내부 카운터로 전환해 무제한 생성으로 열리지 않도록 구성했습니다.
+
+`PUBLIC_WEB_ORIGIN`은 새로 생성한 링크에 사용하는 기본 공개 주소이고, `ALTERNATE_WEB_ORIGIN`은 같은 slug를 제공하는 선택적 보조 주소입니다. 현재 임시 기본 주소는 `https://gori.bera.page`이며, 두 값 모두 경로 없는 HTTP(S) origin이어야 합니다.
 
 ## 로컬 실행
 
@@ -32,8 +34,9 @@ pnpm dev
 
 - 웹: http://localhost:3000
 - API 상태: http://localhost:4000/api/health
+- 링크 관리: `http://localhost:3000/manage/links`
 - 링크 생성: `POST http://localhost:4000/api/links`
-- 링크 이동: `http://localhost:3000/go/<slug>`
+- 링크 이동: `http://localhost:3000/<slug>`
 
 MySQL과 Redis의 개발 포트는 호스트의 `127.0.0.1`에만 공개됩니다. 리버스 프록시 뒤에서 API를 실행한다면 실제 프록시 홉 수에 맞춰 `TRUST_PROXY_HOPS`를 설정해야 정확한 클라이언트 IP로 생성 제한을 적용할 수 있습니다.
 

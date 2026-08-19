@@ -14,9 +14,9 @@ vi.mock("next/navigation", () => ({
   redirect: redirectMock,
 }));
 
-import GoPage from "./page";
+import LinkPage from "./page";
 
-describe("GoPage", () => {
+describe("LinkPage", () => {
   beforeEach(() => {
     process.env.API_INTERNAL_URL = "http://api.internal:4000";
     notFoundMock.mockClear();
@@ -41,7 +41,7 @@ describe("GoPage", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(
-      GoPage({
+      LinkPage({
         params: Promise.resolve({ slug: encodeURIComponent("2026고리홍보") }),
       }),
     ).rejects.toThrow("NEXT_REDIRECT");
@@ -60,7 +60,7 @@ describe("GoPage", () => {
     );
 
     await expect(
-      GoPage({ params: Promise.resolve({ slug: "없는고리" }) }),
+      LinkPage({ params: Promise.resolve({ slug: "없는고리" }) }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
     expect(notFoundMock).toHaveBeenCalledOnce();
   });

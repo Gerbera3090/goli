@@ -240,7 +240,6 @@ input:focus {
 
 .result {
   display: grid;
-  grid-template-columns: 1fr auto;
   gap: 8px 18px;
   align-items: center;
   margin-top: 24px;
@@ -251,14 +250,20 @@ input:focus {
 }
 
 .result p {
-  grid-column: 1 / -1;
   margin: 0;
   color: var(--green-dark);
   font-size: 13px;
   font-weight: 750;
 }
 
-.result a {
+.result-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+}
+
+.result-link a {
   overflow: hidden;
   color: var(--green-dark);
   font-size: 18px;
@@ -268,7 +273,7 @@ input:focus {
   white-space: nowrap;
 }
 
-.result button {
+.result-link button {
   padding: 10px 14px;
   color: var(--green-dark);
   background: transparent;
@@ -341,14 +346,15 @@ footer {
   }
 
   .result {
+    gap: 16px;
+  }
+
+  .result-link {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 
-  .result p {
-    grid-column: 1;
-  }
-
-  .result button {
+  .result-link button {
     justify-self: start;
   }
 }
