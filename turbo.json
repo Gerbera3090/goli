@@ -27,7 +27,9 @@
         "PUBLIC_WEB_ORIGIN",
         "REDIS_HOST",
         "REDIS_LINK_TTL_SECONDS",
+        "REDIS_PASSWORD",
         "REDIS_PORT",
+        "REDIS_USERNAME",
         "TRUST_PROXY_HOPS"
       ],
       "persistent": true
