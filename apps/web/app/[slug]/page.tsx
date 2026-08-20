@@ -1,7 +1,7 @@
 import { resolveLinkResponseSchema } from "@goli/contracts/links";
 import { notFound } from "next/navigation";
 
-import { RedirectClient } from "./redirect-client";
+import { BrandMark } from "../../components/brand-mark";
 
 export const dynamic = "force-dynamic";
 
@@ -39,5 +39,15 @@ export default async function LinkPage({ params }: LinkPageProps) {
     throw new Error("고리 서버가 잘못된 응답을 반환했습니다.");
   }
 
-  return <RedirectClient targetUrl={result.data.targetUrl} />;
+  return (
+    <main className="centered-page">
+      <BrandMark />
+      <p className="eyebrow">LINK DESTINATION</p>
+      <h1>이 고리를 따라갈까요?</h1>
+      <p>{result.data.targetUrl}</p>
+      <a className="primary-button link-button" href={result.data.targetUrl}>
+        목적지로 이동
+      </a>
+    </main>
+  );
 }

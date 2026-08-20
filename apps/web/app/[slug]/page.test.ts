@@ -1,3 +1,4 @@
+import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { notFoundMock } = vi.hoisted(() => ({
@@ -10,7 +11,6 @@ vi.mock("next/navigation", () => ({
   notFound: notFoundMock,
 }));
 
-import { RedirectClient } from "./redirect-client";
 import LinkPage from "./page";
 
 describe("LinkPage", () => {
@@ -24,7 +24,7 @@ describe("LinkPage", () => {
     delete process.env.API_INTERNAL_URL;
   });
 
-  it("resolves an encoded Korean slug and renders its history page", async () => {
+  it("resolves an encoded Korean slug and renders a click-through page", async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(
         JSON.stringify({
@@ -44,8 +44,10 @@ describe("LinkPage", () => {
       `http://api.internal:4000/api/links/${encodeURIComponent("2026고리홍보")}`,
       { cache: "no-store" },
     );
-    expect(page.type).toBe(RedirectClient);
-    expect(page.props).toEqual({ targetUrl: "https://sparcs.org/" });
+    const html = renderToStaticMarkup(page);
+
+    expect(html).toContain('href="https://sparcs.org/"');
+    expect(html).toContain("목적지로 이동");
   });
 
   it("renders not found when the API cannot resolve the slug", async () => {
