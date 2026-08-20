@@ -1,13 +1,15 @@
 import { resolveLinkResponseSchema } from "@goli/contracts/links";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+
+import { RedirectClient } from "./redirect-client";
 
 export const dynamic = "force-dynamic";
 
-interface GoPageProps {
+interface LinkPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function GoPage({ params }: GoPageProps): Promise<never> {
+export default async function LinkPage({ params }: LinkPageProps) {
   const { slug: encodedSlug } = await params;
   let slug: string;
 
@@ -37,5 +39,5 @@ export default async function GoPage({ params }: GoPageProps): Promise<never> {
     throw new Error("고리 서버가 잘못된 응답을 반환했습니다.");
   }
 
-  redirect(result.data.targetUrl);
+  return <RedirectClient targetUrl={result.data.targetUrl} />;
 }

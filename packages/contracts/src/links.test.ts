@@ -48,4 +48,15 @@ describe("createLinkRequestSchema", () => {
       }),
     ).toThrow();
   });
+
+  it("reserves top-level service routes", () => {
+    expect(() =>
+      createLinkRequestSchema.parse({
+        targetUrl: "https://sparcs.org",
+        slug: "manage",
+      }),
+    ).toThrow();
+
+    expect(slugSchema.parse("manage")).toBe("manage");
+  });
 });

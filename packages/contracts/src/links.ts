@@ -17,6 +17,13 @@ export const slugSchema = z
       ),
   );
 
+const reservedSlugs = new Set(["_next", "api", "go", "manage"]);
+
+export const creatableSlugSchema = slugSchema.refine(
+  (slug) => !reservedSlugs.has(slug),
+  "서비스에서 사용하는 이름은 slug로 만들 수 없습니다.",
+);
+
 export const httpUrlSchema = z
   .string()
   .trim()
@@ -141,7 +148,7 @@ export const createTargetUrlSchema = httpUrlSchema.refine((value) => {
 export const createLinkRequestSchema = z
   .object({
     targetUrl: createTargetUrlSchema,
-    slug: slugSchema.optional(),
+    slug: creatableSlugSchema.optional(),
   })
   .strict();
 
@@ -149,8 +156,8 @@ export const linkSchema = z.object({
   id: z.number().int().positive(),
   slug: slugSchema,
   targetUrl: httpUrlSchema,
-  ownerUserId: z.literal(0),
-  shortPath: z.string().startsWith("/go/"),
+  createdByUserId: z.literal(0),
+  shortPath: z.string().regex(/^\/[^/]+$/),
   createdAt: z.string().datetime(),
 });
 

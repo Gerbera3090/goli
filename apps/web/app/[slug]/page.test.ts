@@ -1,26 +1,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { notFoundMock, redirectMock } = vi.hoisted(() => ({
+const { notFoundMock } = vi.hoisted(() => ({
   notFoundMock: vi.fn(() => {
     throw new Error("NEXT_NOT_FOUND");
-  }),
-  redirectMock: vi.fn(() => {
-    throw new Error("NEXT_REDIRECT");
   }),
 }));
 
 vi.mock("next/navigation", () => ({
   notFound: notFoundMock,
-  redirect: redirectMock,
 }));
 
-import GoPage from "./page";
+import { RedirectClient } from "./redirect-client";
+import LinkPage from "./page";
 
-describe("GoPage", () => {
+describe("LinkPage", () => {
   beforeEach(() => {
     process.env.API_INTERNAL_URL = "http://api.internal:4000";
     notFoundMock.mockClear();
-    redirectMock.mockClear();
   });
 
   afterEach(() => {
@@ -28,7 +24,7 @@ describe("GoPage", () => {
     delete process.env.API_INTERNAL_URL;
   });
 
-  it("resolves an encoded Korean slug and redirects to its target", async () => {
+  it("resolves an encoded Korean slug and renders its history page", async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(
         JSON.stringify({
@@ -40,17 +36,16 @@ describe("GoPage", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(
-      GoPage({
-        params: Promise.resolve({ slug: encodeURIComponent("2026고리홍보") }),
-      }),
-    ).rejects.toThrow("NEXT_REDIRECT");
+    const page = await LinkPage({
+      params: Promise.resolve({ slug: encodeURIComponent("2026고리홍보") }),
+    });
 
     expect(fetchMock).toHaveBeenCalledWith(
       `http://api.internal:4000/api/links/${encodeURIComponent("2026고리홍보")}`,
       { cache: "no-store" },
     );
-    expect(redirectMock).toHaveBeenCalledWith("https://sparcs.org/");
+    expect(page.type).toBe(RedirectClient);
+    expect(page.props).toEqual({ targetUrl: "https://sparcs.org/" });
   });
 
   it("renders not found when the API cannot resolve the slug", async () => {
@@ -60,7 +55,7 @@ describe("GoPage", () => {
     );
 
     await expect(
-      GoPage({ params: Promise.resolve({ slug: "없는고리" }) }),
+      LinkPage({ params: Promise.resolve({ slug: "없는고리" }) }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
     expect(notFoundMock).toHaveBeenCalledOnce();
   });
