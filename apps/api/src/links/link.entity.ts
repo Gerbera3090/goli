@@ -12,12 +12,12 @@ export class Link {
   targetUrl!: string;
 
   @Property({
-    fieldName: "owner_user_id",
+    fieldName: "created_by_user_id",
     type: "bigint",
     defaultRaw: "0",
     unsigned: true,
   })
-  ownerUserId = 0;
+  createdByUserId = 0;
 
   @Property({
     fieldName: "created_at",

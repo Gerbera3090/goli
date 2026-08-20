@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["API_INTERNAL_URL"],
+      "env": ["ALTERNATE_WEB_ORIGIN", "API_INTERNAL_URL", "PUBLIC_WEB_ORIGIN"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "check-types": {
@@ -13,6 +13,7 @@
       "dependsOn": ["^build"],
       "cache": false,
       "env": [
+        "ALTERNATE_WEB_ORIGIN",
         "API_INTERNAL_URL",
         "API_PORT",
         "DB_HOST",
@@ -23,9 +24,12 @@
         "LINK_CREATE_RATE_LIMIT_MAX",
         "LINK_CREATE_RATE_LIMIT_WINDOW_SECONDS",
         "PORT",
+        "PUBLIC_WEB_ORIGIN",
         "REDIS_HOST",
         "REDIS_LINK_TTL_SECONDS",
+        "REDIS_PASSWORD",
         "REDIS_PORT",
+        "REDIS_USERNAME",
         "TRUST_PROXY_HOPS"
       ],
       "persistent": true

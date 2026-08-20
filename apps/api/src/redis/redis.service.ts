@@ -24,6 +24,8 @@ export class RedisService implements OnModuleDestroy {
     this.client = new Redis({
       host: config.get<string>("REDIS_HOST") ?? "127.0.0.1",
       port: Number(config.get<string>("REDIS_PORT") ?? 6379),
+      username: config.get<string>("REDIS_USERNAME"),
+      password: config.get<string>("REDIS_PASSWORD"),
       lazyConnect: true,
       enableOfflineQueue: false,
       maxRetriesPerRequest: 1,

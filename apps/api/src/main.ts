@@ -8,7 +8,7 @@ import { AppModule } from "./app.module.js";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  const port = Number(process.env.API_PORT ?? 4000);
+  const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
   const trustProxyHops = Number(process.env.TRUST_PROXY_HOPS ?? 0);
 
   if (trustProxyHops > 0) {

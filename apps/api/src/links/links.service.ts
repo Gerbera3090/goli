@@ -32,7 +32,7 @@ export class LinksService {
     @Inject(ConfigService) config: ConfigService,
   ) {
     this.cacheTtlSeconds = Number(
-      config.get<string>("REDIS_LINK_TTL_SECONDS") ?? 3600,
+      config.get<string>("REDIS_LINK_TTL_SECONDS") ?? 120,
     );
   }
 
@@ -88,7 +88,7 @@ export class LinksService {
         await this.linkRepository.insert({
           slug,
           targetUrl,
-          ownerUserId: ANONYMOUS_USER_ID,
+          createdByUserId: ANONYMOUS_USER_ID,
           createdAt: now,
           updatedAt: now,
         }),
@@ -107,8 +107,8 @@ export class LinksService {
       id,
       slug,
       targetUrl,
-      ownerUserId: ANONYMOUS_USER_ID,
-      shortPath: `/go/${slug}`,
+      createdByUserId: ANONYMOUS_USER_ID,
+      shortPath: `/${slug}`,
       createdAt: now.toISOString(),
     };
   }

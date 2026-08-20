@@ -10,18 +10,22 @@ import { type FormEvent, useState } from "react";
 type SubmissionState =
   | { status: "idle" }
   | { status: "submitting" }
-  | { status: "success"; link: LinkResponse; shortUrl: string }
+  | { status: "success"; link: LinkResponse; shortUrls: string[] }
   | { status: "error"; message: string };
 
-export function LinkForm() {
+export function LinkForm({
+  publicOrigins,
+}: {
+  publicOrigins: [string, ...string[]];
+}) {
   const [targetUrl, setTargetUrl] = useState("");
   const [slug, setSlug] = useState("");
   const [state, setState] = useState<SubmissionState>({ status: "idle" });
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setCopied(false);
+    setCopied(null);
 
     const parsedRequest = createLinkRequestSchema.safeParse({
       targetUrl,
@@ -59,7 +63,7 @@ export function LinkForm() {
       setState({
         status: "success",
         link,
-        shortUrl: `${window.location.origin}${link.shortPath}`,
+        shortUrls: publicOrigins.map((origin) => `${origin}${link.shortPath}`),
       });
     } catch (error) {
       setState({
@@ -70,21 +74,19 @@ export function LinkForm() {
     }
   }
 
-  async function copyShortUrl() {
-    if (state.status !== "success") return;
-
-    await navigator.clipboard.writeText(state.shortUrl);
-    setCopied(true);
+  async function copyShortUrl(shortUrl: string) {
+    await navigator.clipboard.writeText(shortUrl);
+    setCopied(shortUrl);
   }
 
   return (
     <section className="card" aria-labelledby="create-link-title">
       <div className="card-heading">
         <div>
-          <p className="step">01</p>
+          <p className="step">NEW LINK</p>
           <h2 id="create-link-title">새 고리 만들기</h2>
         </div>
-        <span className="anonymous-badge">USER 0</span>
+        <span className="anonymous-badge">로그인 없이 사용</span>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -102,10 +104,10 @@ export function LinkForm() {
         />
 
         <label htmlFor="slug">
-          원하는 이름 <span>선택</span>
+          링크 이름 <span>선택</span>
         </label>
         <div className="slug-input">
-          <span>goli.sparcs.org/go/</span>
+          <span>{new URL(publicOrigins[0]).host}/</span>
           <input
             id="slug"
             name="slug"
@@ -126,9 +128,7 @@ export function LinkForm() {
           type="submit"
           disabled={state.status === "submitting"}
         >
-          {state.status === "submitting"
-            ? "고리를 잇는 중…"
-            : "짧은 링크 만들기"}
+          {state.status === "submitting" ? "고리를 잇는 중…" : "고리 만들기"}
         </button>
       </form>
 
@@ -141,12 +141,16 @@ export function LinkForm() {
       {state.status === "success" && (
         <div className="result" aria-live="polite">
           <p>고리가 연결됐어요</p>
-          <a href={state.link.shortPath} target="_blank" rel="noreferrer">
-            {state.shortUrl}
-          </a>
-          <button type="button" onClick={copyShortUrl}>
-            {copied ? "복사했어요" : "주소 복사"}
-          </button>
+          {state.shortUrls.map((shortUrl) => (
+            <div className="result-link" key={shortUrl}>
+              <a href={shortUrl} target="_blank" rel="noreferrer">
+                {shortUrl}
+              </a>
+              <button type="button" onClick={() => copyShortUrl(shortUrl)}>
+                {copied === shortUrl ? "복사했어요" : "주소 복사"}
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </section>
