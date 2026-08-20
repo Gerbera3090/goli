@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { LinkForm } from "@/components/link-form";
 import { getPublicOrigins } from "@/lib/public-origins";
 
 export const dynamic = "force-dynamic";
@@ -8,33 +7,26 @@ export default function HomePage() {
   const publicOrigins = getPublicOrigins();
 
   return (
-    <main className="shell">
+    <main className="page-shell home-layout">
       <section className="hero">
-        <div className="brand-mark" aria-hidden="true">
-          고
-        </div>
-        <p className="eyebrow">SPARCS · KAIST SHORT LINK</p>
+        <p className="eyebrow">KAIST SHORT LINK</p>
         <h1>
-          길고 복잡한 주소를
+          긴 주소를 가볍게,
           <br />
-          하나의 고리로.
+          <span>하나의 고리로.</span>
         </h1>
         <p className="description">
-          지금은 로그인 없이 누구나 링크를 만들 수 있어요. 생성자는 익명 사용자
-          0번으로 기록됩니다.
+          복잡한 주소를 기억하기 쉬운 짧은 링크로 바꿔보세요. 로그인 없이 바로
+          만들고 공유할 수 있어요.
         </p>
+        <ul className="service-points" aria-label="서비스 특징">
+          <li>로그인 없이</li>
+          <li>한글 링크 이름</li>
+          <li>만들고 바로 복사</li>
+        </ul>
       </section>
 
-      <Link className="primary-button link-button" href="/manage/links">
-        링크 관리로 이동
-      </Link>
-
-      <footer>
-        <span>
-          {publicOrigins.map((origin) => new URL(origin).host).join(" · ")}
-        </span>
-        <span>made by SPARCS</span>
-      </footer>
+      <LinkForm publicOrigins={publicOrigins} />
     </main>
   );
 }

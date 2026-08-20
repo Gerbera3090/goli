@@ -9,9 +9,7 @@ interface LinkPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function LinkPage({
-  params,
-}: LinkPageProps) {
+export default async function LinkPage({ params }: LinkPageProps) {
   const { slug: encodedSlug } = await params;
   let slug: string;
 

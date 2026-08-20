@@ -6,9 +6,9 @@ describe("markRedirectHistoryEntry", () => {
   it("marks a new entry and leaves a restored entry in place", () => {
     const replaceState = vi.fn();
 
-    expect(
-      markRedirectHistoryEntry({ state: { idx: 1 }, replaceState }),
-    ).toBe(true);
+    expect(markRedirectHistoryEntry({ state: { idx: 1 }, replaceState })).toBe(
+      true,
+    );
     expect(replaceState).toHaveBeenCalledWith(
       { idx: 1, __goliRedirected: true },
       "",
