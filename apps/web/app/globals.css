@@ -45,13 +45,7 @@ body {
   min-height: 100vh;
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(
-      circle at 12% 8%,
-      rgb(254 240 138 / 42%),
-      transparent 25rem
-    ),
-    linear-gradient(180deg, var(--yellow-50) 0, var(--page) 340px);
+  background: var(--page);
   font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 }
 
@@ -208,12 +202,7 @@ h1 {
 }
 
 h1 span {
-  background: linear-gradient(
-    transparent 54%,
-    var(--yellow-300) 54%,
-    var(--yellow-300) 92%,
-    transparent 92%
-  );
+  box-shadow: inset 0 -0.38em var(--yellow-300);
 }
 
 .description {
