@@ -8,11 +8,11 @@ describe("slugSchema", () => {
   });
 
   it("normalizes latin letters to lowercase", () => {
-    expect(slugSchema.parse("GoLi_2026")).toBe("goli_2026");
+    expect(slugSchema.parse("GoRi_2026")).toBe("gori_2026");
   });
 
   it("rejects path separators", () => {
-    expect(() => slugSchema.parse("events/goli")).toThrow();
+    expect(() => slugSchema.parse("events/gori")).toThrow();
   });
 });
 

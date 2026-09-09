@@ -14,7 +14,7 @@ import {
   type CreateLinkRequest,
   type LinkResponse,
   type ResolveLinkResponse,
-} from "@goli/contracts/links";
+} from "@gori/contracts/links";
 
 import { ZodValidationPipe } from "../common/zod-validation.pipe.js";
 import { CreateLinkRateLimitGuard } from "./create-link-rate-limit.guard.js";

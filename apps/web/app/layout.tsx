@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link className="wordmark" href="/" aria-label="고리 홈">
               <BrandMark />
               <strong>고리</strong>
-              <span>GOLI</span>
+              <span>GORI</span>
             </Link>
             <nav className="site-nav" aria-label="주요 메뉴">
               <Link href="/manage/links">링크 만들기</Link>

@@ -1,14 +1,14 @@
-name: goli
+name: gori
 
 services:
   mysql:
     image: mysql:8.4
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: goli
-      MYSQL_USER: goli
-      MYSQL_PASSWORD: goli
-      MYSQL_ROOT_PASSWORD: goli-root
+      MYSQL_DATABASE: gori
+      MYSQL_USER: gori
+      MYSQL_PASSWORD: gori
+      MYSQL_ROOT_PASSWORD: gori-root
     ports:
       - "127.0.0.1:3306:3306"
     command:
@@ -24,7 +24,7 @@ services:
           "localhost",
           "-u",
           "root",
-          "-pgoli-root",
+          "-pgori-root",
         ]
       interval: 5s
       timeout: 3s

@@ -42,14 +42,14 @@ jobs:
       mysql:
         image: mysql:8.4
         env:
-          MYSQL_DATABASE: goli
-          MYSQL_USER: goli
-          MYSQL_PASSWORD: goli
-          MYSQL_ROOT_PASSWORD: goli-root
+          MYSQL_DATABASE: gori
+          MYSQL_USER: gori
+          MYSQL_PASSWORD: gori
+          MYSQL_ROOT_PASSWORD: gori-root
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h localhost -uroot -pgoli-root"
+          --health-cmd="mysqladmin ping -h localhost -uroot -pgori-root"
           --health-interval=5s
           --health-timeout=3s
           --health-retries=20
@@ -80,13 +80,13 @@ jobs:
       - run: pnpm build
       - name: Verify migrations and schema
         run: |
-          pnpm --filter @goli/api db:migrate
-          schema_output="$(pnpm --filter @goli/api exec mikro-orm schema:update --dump)"
+          pnpm --filter @gori/api db:migrate
+          schema_output="$(pnpm --filter @gori/api exec mikro-orm schema:update --dump)"
           echo "$schema_output"
           grep -q "Schema is up-to-date" <<< "$schema_output"
       - name: Smoke-test the production API entrypoint
         run: |
-          pnpm --filter @goli/api start > /tmp/goli-api.log 2>&1 &
+          pnpm --filter @gori/api start > /tmp/gori-api.log 2>&1 &
           api_pid=$!
           trap 'kill "$api_pid" 2>/dev/null || true' EXIT
 
@@ -97,5 +97,5 @@ jobs:
             sleep 1
           done
 
-          cat /tmp/goli-api.log
+          cat /tmp/gori-api.log
           exit 1

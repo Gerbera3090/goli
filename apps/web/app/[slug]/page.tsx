@@ -1,4 +1,4 @@
-import { resolveLinkResponseSchema } from "@goli/contracts/links";
+import { resolveLinkResponseSchema } from "@gori/contracts/links";
 import { notFound } from "next/navigation";
 
 import { BrandMark } from "../../components/brand-mark";

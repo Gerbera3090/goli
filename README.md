@@ -1,4 +1,4 @@
-# 고리 (GOLI)
+# 고리 (GORI)
 
 KAIST 구성원을 위한 짧은 링크 서비스입니다.
 
@@ -31,7 +31,7 @@ Node.js 22.22.1과 pnpm 10이 필요합니다.
 cp .env.example .env
 pnpm install
 pnpm infra:up
-pnpm --filter @goli/api db:migrate
+pnpm --filter @gori/api db:migrate
 pnpm dev
 ```
 

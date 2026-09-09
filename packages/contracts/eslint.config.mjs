@@ -1,3 +1,3 @@
-import { nodeConfig } from "@goli/config/eslint/node";
+import { nodeConfig } from "@gori/config/eslint/node";
 
 export default nodeConfig;

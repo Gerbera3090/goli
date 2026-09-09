@@ -19,9 +19,9 @@ export function createDatabaseConfig(config?: ConfigurationSource) {
     entities: [Link],
     host: read(config, "DB_HOST", "127.0.0.1"),
     port: Number(read(config, "DB_PORT", "3306")),
-    user: read(config, "DB_USER", "goli"),
-    password: read(config, "DB_PASSWORD", "goli"),
-    dbName: read(config, "DB_NAME", "goli"),
+    user: read(config, "DB_USER", "gori"),
+    password: read(config, "DB_PASSWORD", "gori"),
+    dbName: read(config, "DB_NAME", "gori"),
     extensions: [Migrator],
     migrations: {
       path: "dist/src/migrations",

@@ -8,7 +8,7 @@ getPublicOrigins();
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["localhost", "127.0.0.1"],
-  transpilePackages: ["@goli/contracts"],
+  transpilePackages: ["@gori/contracts"],
   async rewrites() {
     return [
       {

@@ -7,7 +7,7 @@
 고리는 KAIST 구성원과 교내 단체가 기억하기 쉬운 짧은 링크를 만들고, QR과
 접속 통계를 관리하며, 링크 모음 페이지를 운영할 수 있게 하는 서비스다.
 
-- 서비스명: 고리 (GOLI)
+- 서비스명: 고리 (GORI)
 - 최종 공개 주소: `gori.sparcs.org`, `goli.sparcs.org`
 - 임시 프리뷰 주소: `gori.bera.page`, `gori2.bera.page`
 - 핵심 사용자: KAIST 개인 구성원, 동아리, 학생단체 및 기타 교내 모임

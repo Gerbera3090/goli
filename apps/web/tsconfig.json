@@ -1,5 +1,5 @@
 {
-  "extends": "@goli/config/typescript/next.json",
+  "extends": "@gori/config/typescript/next.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]

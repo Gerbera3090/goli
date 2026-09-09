@@ -1,4 +1,4 @@
-# Goli Design System
+# Gori Design System
 
 고리는 KAIST 구성원이 긴 주소를 빠르고 명확하게 공유하도록 돕는 짧은 링크
 서비스입니다. 이 문서는 현재 제품에서 실제로 사용하는 최소 디자인 규칙을

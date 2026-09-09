@@ -12,7 +12,7 @@ import type {
   CreateLinkRequest,
   LinkResponse,
   ResolveLinkResponse,
-} from "@goli/contracts/links";
+} from "@gori/contracts/links";
 
 import { RedisService } from "../redis/redis.service.js";
 import { Link } from "./link.entity.js";

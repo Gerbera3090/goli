@@ -1,5 +1,5 @@
 {
-  "name": "@goli/api",
+  "name": "@gori/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@goli/contracts": "workspace:*",
+    "@gori/contracts": "workspace:*",
     "@mikro-orm/core": "^7.1.10",
     "@mikro-orm/decorators": "^7.1.10",
     "@mikro-orm/migrations": "^7.1.10",
@@ -30,7 +30,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@goli/config": "workspace:*",
+    "@gori/config": "workspace:*",
     "@mikro-orm/cli": "^7.1.10",
     "@nestjs/cli": "^11.0.24",
     "@types/node": "^22.20.1",

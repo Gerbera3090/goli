@@ -4,7 +4,7 @@ import {
   createLinkRequestSchema,
   linkSchema,
   type LinkResponse,
-} from "@goli/contracts/links";
+} from "@gori/contracts/links";
 import { type FormEvent, useState } from "react";
 
 type SubmissionState =

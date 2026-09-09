@@ -1,5 +1,5 @@
 {
-  "extends": "@goli/config/typescript/library.json",
+  "extends": "@gori/config/typescript/library.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src"

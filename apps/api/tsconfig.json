@@ -1,5 +1,5 @@
 {
-  "extends": "@goli/config/typescript/nestjs.json",
+  "extends": "@gori/config/typescript/nestjs.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "."

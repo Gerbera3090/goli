@@ -20,7 +20,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@goli/contracts':
+      '@gori/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       '@mikro-orm/core':
@@ -63,7 +63,7 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
-      '@goli/config':
+      '@gori/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@mikro-orm/cli':
@@ -93,7 +93,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@goli/contracts':
+      '@gori/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       next:
@@ -106,7 +106,7 @@ importers:
         specifier: ^19.2.8
         version: 19.2.8(react@19.2.8)
     devDependencies:
-      '@goli/config':
+      '@gori/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@types/node':
@@ -158,7 +158,7 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
-      '@goli/config':
+      '@gori/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':

@@ -1,4 +1,4 @@
-# GOLI 기여 가이드
+# GORI 기여 가이드
 
 ## 브랜치와 Pull Request
 
@@ -31,8 +31,8 @@ pnpm build
 DB 스키마를 변경했다면 마이그레이션을 적용한 뒤 Entity와 실제 스키마가 일치하는지도 확인해야 합니다.
 
 ```bash
-pnpm --filter @goli/api db:migrate
-pnpm --filter @goli/api exec mikro-orm schema:update --dump
+pnpm --filter @gori/api db:migrate
+pnpm --filter @gori/api exec mikro-orm schema:update --dump
 ```
 
 마지막 명령은 `Schema is up-to-date`를 출력해야 합니다.

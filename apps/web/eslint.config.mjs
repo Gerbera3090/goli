@@ -1,3 +1,3 @@
-import { nextConfig } from "@goli/config/eslint/next";
+import { nextConfig } from "@gori/config/eslint/next";
 
 export default nextConfig;
